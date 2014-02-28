@@ -47,7 +47,7 @@ award_points = (msg, lang, username, pts) ->
     if lang is 'ja'
       msg.send username + 'に座布団' + pts + '枚やった'
     else
-      msg.send pts + ' Awarded To ' + username
+      msg.send pts + ' Zabuton Awarded To ' + username
 
 decrement_points = (msg, lang, username, pts) ->
     points[username] ?= 0
