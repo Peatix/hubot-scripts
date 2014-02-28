@@ -27,9 +27,9 @@
 #
 #   # 座布団 =~ (座布団|ざぶとん|ザブトン)
 #   hubot <username>に座布団<number>枚 - award <number> zabuton to <username>
-#   hubot <username>から座布団<number>枚 - take away <number> zabuton from <username>
+#   hubot <username>(から|の)座布団<number>枚 - take away <number> zabuton from <username>
 #   hubot <username>は座布団何枚 - list how many zabuton <username> has
-#   hubot <username>から座布団全部 - removes all zabuton from <username>
+#   hubot <username>(から|の)座布団全部 - removes all zabuton from <username>
 #
 # Author:
 #   nheinric
@@ -91,14 +91,14 @@ module.exports = (robot) ->
         award_points_ja(msg, msg.match[1], msg.match[3])
         save(robot)
 
-    robot.respond /(.+)から(座布団|ざぶとん|ザブトン)全部/, (msg) ->
+    robot.respond /(.+)(から|の)(座布団|ざぶとん|ザブトン)全部/, (msg) ->
         username = msg.match[1]
         points[username] = 0
         msg.send username + 'よ、何しとってん?!'
         save(robot)
 
-    robot.respond /(.+)から(座布団|ざぶとん|ザブトン)(\d+)枚/, (msg) ->
-         pts = msg.match[3]
+    robot.respond /(.+)(から|の)(座布団|ざぶとん|ザブトン)(\d+)枚/, (msg) ->
+         pts = msg.match[4]
          username = msg.match[1]
          points[username] ?= 0
          
