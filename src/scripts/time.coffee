@@ -25,7 +25,7 @@
 #   gtoroap
 #
 module.exports = (robot) ->
-  robot.respond /time in (.*)/i, (msg) ->
+  robot.respond /time (in|me) (.*)/i, (msg) ->
     unless process.env.HUBOT_WWO_API_KEY
       msg.send 'Please, set HUBOT_WWO_API_KEY environment variable'
       return
@@ -34,7 +34,7 @@ module.exports = (robot) ->
       return
     msg.http(process.env.HUBOT_WWO_API_URL)
       .query({
-        q: msg.match[1]
+        q: msg.match[2]
         key: process.env.HUBOT_WWO_API_KEY
         format: 'json'
       })
