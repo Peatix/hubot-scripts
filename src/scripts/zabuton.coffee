@@ -54,38 +54,38 @@ module.exports = (robot) ->
     robot.brain.on 'loaded', ->
         points = robot.brain.data.zabuton or {}
 
-    robot.respond /give (\d+) points to (.*?)\s?$/i, (msg) ->
+    robot.respond /give (\d+) zabuton to (.*?)\s?$/i, (msg) ->
         award_points(msg, msg.match[2], msg.match[1])
         save(robot)
 
-    robot.respond /give (.*?) (\d+) points/i, (msg) ->
+    robot.respond /give (.*?) (\d+) zabuton/i, (msg) ->
         award_points(msg, msg.match[1], msg.match[2])
         save(robot)
     
-    robot.respond /take all points from (.*?)\s?$/i, (msg) ->
+    robot.respond /take all zabuton from (.*?)\s?$/i, (msg) ->
         username = msg.match[1]
         points[username] = 0
         msg.send username + ' WHAT DID YOU DO?!'
         save(robot)
 
-    robot.respond /take (\d+) points from (.*?)\s?$/i, (msg) ->
+    robot.respond /take (\d+) zabuton from (.*?)\s?$/i, (msg) ->
          pts = msg.match[1]
          username = msg.match[2]
          points[username] ?= 0
          
          if points[username] is 0
-             msg.send username + ' Does Not Have Any Points To Take Away'
+             msg.send username + ' Does Not Have Any Zabuton To Take Away'
          else
              points[username] -= parseInt(pts)
-             msg.send pts + ' Points Taken Away From ' + username
+             msg.send pts + ' Zabuton Taken Away From ' + username
 
          save(robot)
 
-    robot.respond /how many points does (.*?) have\??/i, (msg) ->
+    robot.respond /how many zabuton does (.*?) have\??/i, (msg) ->
         username = msg.match[1]
         points[username] ?= 0
 
-        msg.send username + ' Has ' + points[username] + ' Points'
+        msg.send username + ' Has ' + points[username] + ' Zabuton'
 
     robot.respond /(.+)に(座布団|ざぶとん|ザブトン)(\d+)枚/, (msg) ->
         award_points_ja(msg, msg.match[1], msg.match[3])
