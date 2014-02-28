@@ -13,7 +13,10 @@
 # Todo:
 #   Special prize for 10 zabuton
 #   Make text more accurate with respect to the show
+#     Special message for many zabuton given at once
+#     Special message for many zabuton removed at once
 #   Handle full-width numbers (全角数字)
+#   Remove extra zabuton for each "ー" after "寒いー"
 #   
 # Special Thanks:
 #   brettlangdon, who build points.coffee, on which this module is (99%) based
@@ -28,6 +31,7 @@
 #   # 座布団 =~ (座布団|ざぶとん|ザブトン)
 #   hubot <username>に座布団<number>枚 - award <number> zabuton to <username>
 #   hubot <username>(から|の)座布団<number>枚 - take away <number> zabuton from <username>
+#   hubot <username>(、|\s)?(寒い|さむい|サムイ|さみー) - take away 1 zabuton from <username>
 #   hubot <username>は?座布団何枚 - list how many zabuton <username> has
 #   hubot <username>(から|の)座布団全部 - removes all zabuton from <username>
 #
@@ -112,6 +116,11 @@ module.exports = (robot) ->
         pts = msg.match[4]
         username = msg.match[1]
         decrement_points( msg, 'en', username, pts )
+        save(robot)
+
+    robot.respond /(.+)(、|\s)?(寒い|さむい|サムイ|さみー)/, (msg) ->
+        username = msg.match[1]
+        decrement_points( msg, 'ja', username, 1 )
         save(robot)
 
     robot.respond /(.+)は?(座布団|ざぶとん|ザブトン)何枚/, (msg) ->
