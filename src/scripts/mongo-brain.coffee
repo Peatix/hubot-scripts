@@ -7,7 +7,7 @@
 #   "mongodb": ">= 1.2.0"
 #
 # Configuration:
-#   MONGODB_USERNAME
+#   MONGODB_USERNAME (set to 'disable-auth' to disable authentication)
 #   MONGODB_PASSWORD
 #   MONGODB_HOST
 #   MONGODB_PORT
@@ -40,12 +40,13 @@ module.exports = (robot) ->
   db = new Db dbname, server, { w: 1, native_parser: true }
 
   db.open (err, client) ->
+
     return error err if err
 
     robot.logger.debug 'Successfully opened connection to mongo'
 
     db.authenticate user, pass, (err, success) ->
-      return error err if err
+      return error err if user != 'disable-auth' and err
 
       robot.logger.debug 'Successfully authenticated with mongo'
 
