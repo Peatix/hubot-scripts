@@ -18,6 +18,7 @@
 #   hubot no, <factoid> is <some phrase, link, whatever> - Replaces the full definition of a factoid
 #   hubot factoids list - List all factoids
 #   hubot factoid delete "<factoid>" - delete a factoid
+#   hubot factoid get "<factoid>" - Same as `<factoid>?`, but usable via, e.g., eardropping.coffee
 #
 # Author:
 #   arthurkalm
@@ -100,3 +101,8 @@ module.exports = (robot) ->
 
   robot.respond /factoids? delete "(.*)"$/i, (msg) ->
     msg.reply factoids.delFactoid msg.match[1]
+
+  robot.respond /factoids? get "(.*)"$/i, (msg) ->
+    factoid = factoids.get msg.match[1]
+    if factoid
+      msg.reply msg.match[1] + " is " + factoid
